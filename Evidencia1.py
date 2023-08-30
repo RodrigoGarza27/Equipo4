@@ -1,1 +1,1 @@
-hola munfo 
+print("hola mundo")
