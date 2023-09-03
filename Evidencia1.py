@@ -58,6 +58,68 @@ class TallerMecanico:
                     print("Detalle de Servicios:")
                     for servicio in nota['detalle']:
                         print(f"  - Descripción: {servicio['descripcion']}, Costo: {servicio['costo']:.2f}")
+                        def consultar_por_periodo(self):
+        fecha_inicial_str = input("Ingrese la fecha inicial (YYYY-MM-DD): ")
+        fecha_final_str = input("Ingrese la fecha final (YYYY-MM-DD): ")
+        
+        try:
+            fecha_inicial = datetime.datetime.strptime(fecha_inicial_str, "%Y-%m-%d")
+            fecha_final = datetime.datetime.strptime(fecha_final_str, "%Y-%m-%d")
+        except ValueError:
+            print("Formato de fecha incorrecto. Utilice el formato YYYY-MM-DD.")
+            return
+        
+        notas_periodo = [nota for nota in self.notas if fecha_inicial <= nota['fecha'] <= fecha_final]
+        
+        if not notas_periodo:
+            print("No hay notas emitidas para el período seleccionado.")
+        else:
+            print("\nNotas del período seleccionado:")
+            print("Folio\tCliente\tCosto Total\tFecha\tDescripción")
+            for nota in notas_periodo:
+                descripcion_servicios = ', '.join(servicio['descripcion'] for servicio in nota['detalle'])
+                print(f"{nota['folio']}\t{nota['cliente']}\t{nota['costo_total']:.2f}\t{nota['fecha'].strftime('%Y-%m-%d %H:%M:%S')}\t{descripcion_servicios}")
+    
+    def consultar_por_folio(self, folio_consulta):
+        nota_encontrada = None
+        for nota in self.notas:
+            if nota['folio'] == folio_consulta and not nota['cancelada']:
+                nota_encontrada = nota
+                break
+        
+        if nota_encontrada:
+            print("\nNota encontrada:")
+            print(f"Folio: {nota_encontrada['folio']}, Cliente: {nota_encontrada['cliente']}, Costo Total: {nota_encontrada['costo_total']:.2f}, Fecha: {nota_encontrada['fecha'].strftime('%Y-%m-%d %H:%M:%S')}")
+            print("Detalle de Servicios:")
+            for servicio in nota_encontrada['detalle']:
+                print(f"  - Descripción: {servicio['descripcion']}, Costo: {servicio['costo']:.2f}")
+            
+            confirmacion = input("¿Desea cancelar esta nota? (S/N): ")
+            if confirmacion.lower() == 's':
+                nota_encontrada['cancelada'] = True
+                print("Nota cancelada correctamente.")
+        else:
+            print("La nota no se encuentra en el sistema o está cancelada.")
+    
+    def recuperar_nota_cancelada(self):
+        notas_canceladas = [nota for nota in self.notas if nota['cancelada']]
+        
+        if not notas_canceladas:
+            print("No hay notas canceladas para recuperar.")
+        else:
+            print("\nNotas canceladas disponibles para recuperar:")
+            print("Folio\tCliente\tCosto Total\tFecha")
+            for nota in notas_canceladas:
+                print(f"{nota['folio']}\t{nota['cliente']}\t{nota['costo_total']:.2f}\t{nota['fecha'].strftime('%Y-%m-%d %H:%M:%S')}")
+            
+            folio_recuperar = input("Ingrese el folio de la nota a recuperar (o 'fin' para cancelar): ")
+            
+            if folio_recuperar.lower() != 'fin':
+                nota_recuperar = None
+                for nota in notas_canceladas:
+                    if nota['folio'] == folio_recuperar:
+                        nota_recuperar = nota
+                        break
 
 
 if nota_recuperar:
