@@ -30,7 +30,8 @@ class TallerMecanico:
                 except ValueError:
                     print("El costo debe ser un número mayor que 0.")
             detalle.append({'descripcion': descripcion, 'costo': costo})
-            # Calcular el costo total a partir del detalle de servicios
+        
+        # Calcular el costo total a partir del detalle de servicios
         costo_total = sum(servicio['costo'] for servicio in detalle)
         
         nota = {
@@ -136,51 +137,51 @@ class TallerMecanico:
                     print("El folio ingresado no corresponde a una nota cancelada.")
             else:
                 print("Operación de recuperación de nota cancelada cancelada.")
+
+# Crear una instancia del taller mecánico
+taller = TallerMecanico()
+
+while True:
+    print("\nMenú:")
+    print("1. Crear una nueva nota de servicio")
+    print("2. Listar todas las notas de servicio")
+    print("3. Consultas y Reportes")
+    print("4. Recuperar una nota cancelada")
+    print("5. Salir")
+    
+    opcion = input("Seleccione una opción: ")
+    
+    if opcion == '1':
+        cliente = input("Ingrese el nombre del cliente: ")
+        taller.crear_nota(cliente)
+    elif opcion == '2':
+        taller.listar_notas()
+    elif opcion == '3':
+        while True:
+            print("\nSubmenú de Consultas y Reportes:")
+            print("1. Consulta por período")
+            print("2. Consulta por folio")
+            print("3. Volver al menú principal")
             
-            # Crear una instancia del taller mecánico
-            taller = TallerMecanico()
+            subopcion = input("Seleccione una opción del submenú: ")
             
-            while True:
-                print("\nMenú:")
-                print("1. Crear una nueva nota de servicio")
-                print("2. Listar todas las notas de servicio")
-                print("3. Consultas y Reportes")
-                print("4. Recuperar una nota cancelada")
-                print("5. Salir")
-                
-                opcion = input("Seleccione una opción: ")
-                
-                if opcion == '1':
-                    cliente = input("Ingrese el nombre del cliente: ")
-                    taller.crear_nota(cliente)
-                elif opcion == '2':
-                    taller.listar_notas()
-                elif opcion == '3':
-                    while True:
-                        print("\nSubmenú de Consultas y Reportes:")
-                        print("1. Consulta por período")
-                        print("2. Consulta por folio")
-                        print("3. Volver al menú principal")
-                        
-                        subopcion = input("Seleccione una opción del submenú: ")
-                        
-                        if subopcion == '1':
-                            taller.consultar_por_periodo()
-                        elif subopcion == '2':
-                            folio_consulta = input("Ingrese el folio de la nota a consultar: ")
-                            taller.consultar_por_folio(folio_consulta)
-                        elif subopcion == '3':
-                            break
-                        else:
-                            print("Opción no válida. Por favor, seleccione una opción válida.")
-                elif opcion == '4':
-                    taller.recuperar_nota_cancelada()
-                elif opcion == '5':
-                    confirmacion_salir = input("¿Desea salir de la solución? (S/N): ")
-                    if confirmacion_salir.lower() == 's':
-                        break
-                else:
-                    print("Opción no válida. Por favor, seleccione una opción válida.")
+            if subopcion == '1':
+                taller.consultar_por_periodo()
+            elif subopcion == '2':
+                folio_consulta = input("Ingrese el folio de la nota a consultar: ")
+                taller.consultar_por_folio(folio_consulta)
+            elif subopcion == '3':
+                break
+            else:
+                print("Opción no válida. Por favor, seleccione una opción válida.")
+    elif opcion == '4':
+        taller.recuperar_nota_cancelada()
+    elif opcion == '5':
+        confirmacion_salir = input("¿Desea salir de la solución? (S/N): ")
+        if confirmacion_salir.lower() == 's':
+            break
+    else:
+        print("Opción no válida. Por favor, seleccione una opción válida.")  
             
             
             
