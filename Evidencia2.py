@@ -181,6 +181,22 @@ while True:
         if confirmacion_salir.lower() == 's':
             break
     else:
-        print("Opción no válida. Por favor, seleccione una opción válida.")  
-            
+        print("Opción no válida. Por favor, seleccione una opción válida.") 
+
+import random
+        import datetime
+        import re
+        import csv
+        class Tallermecanico:
+            def_init_(self):
+            self.notas=[]
+            self.load_data()
+            def load_data(self):
+                try:
+                    with open ("taller_mecanico_data.csv", mode ="r", newline='')as file:
+                        reader = csv.DictReader(file)
+                for row in reader:
+                    nota = {
+                        'folio': row['folio'],
+                        'cliente': ro
     
